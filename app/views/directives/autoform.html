@@ -1,0 +1,25 @@
+<form class="AutoForm" action="">
+	<noscript>
+		{{fields | json}}
+	</noscript>
+	<div ng-repeat="(key,field) in fields" ng-if="!field.hidden" class="Field">
+		<label class="Field__label" for="{{field.id}}">{{field.label}}</label>
+		
+		<!--Text-->
+		<input class="Field__input" ng-if="field.type=='text'" type="text" 
+		ng-model="field.value" name="{{field.id}}" id="{{field.id}}" value="{{field.default}}" />
+		
+		<!--Textarea-->
+		<div ng-if="field.type=='textarea'" ng-model="field.value" name="{{field.id}}" id="{{field.id}}" quill="{theme:'snow'}">
+		</div>
+		
+		<!--Boolean-->
+		<input class="Field__checkbox" type="checkbox" ng-model="field.value" name="{{field.id}}" id="{{field.id}}" ng-if="field.type=='boolean'" ng-checked="field.default" />
+		
+		<!--List-->
+		<select class="Field__select" ng-model="field.value" name="{{field.id}}" ng-if="field.type=='list'">
+			<option value="">-- {{field.label}} --</option>
+			<option ng-repeat="opt in field.listOptions" value="{{opt.value}}">{{opt.label}}</option>
+		</select>
+	</div>
+</form>
